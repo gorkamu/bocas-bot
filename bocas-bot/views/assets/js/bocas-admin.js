@@ -3,6 +3,11 @@ jQuery(function($) {
         $("#date").datepicker({
             dateFormat: "dd-mm-yy"
         });
+
+        $('#generate_ip_btn').on('click', () => {
+            let ip = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255) + 0)+"."+(Math.floor(Math.random() * 255) + 0)+"."+(Math.floor(Math.random() * 255) + 0);
+            $('#ip').val(ip);
+        });
     });
 
 
