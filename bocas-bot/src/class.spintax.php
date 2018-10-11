@@ -11,7 +11,7 @@ class Spintax {
     {
         return preg_replace_callback(
             '/\{(((?>[^\{\}]+)|(?R))*)\}/x',
-            array($this, 'replace'),
+            [$this, 'replace'],
             $text
         );
     }

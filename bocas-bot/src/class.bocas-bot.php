@@ -67,7 +67,7 @@ class BocasBot
 
     public static function setup()
     {
-        add_action('bocas_publish_cron', array('BocasBot', 'bocas_publish'));
+        add_action('bocas_publish_cron', ['BocasBot', 'bocas_publish']);
     }
 
     public static function bocas_publish()
@@ -160,7 +160,7 @@ class BocasBot
         $csv = str_replace("\r", "<br>", $string);
 
         $header = NULL;
-        $data = array();
+        $data = [];
         $rows = explode(PHP_EOL, $csv);
 
         foreach($rows as $row_str)
@@ -195,7 +195,7 @@ class BocasBot
     public static function save_csv_comments_file($file, $mode = 'r+')
     {
         $fh = fopen($file, $mode);
-        $lines = array();
+        $lines = [];
 
         $header = NULL;
 

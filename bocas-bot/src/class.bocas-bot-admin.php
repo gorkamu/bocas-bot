@@ -29,11 +29,11 @@ class BocasBot_Admin
     {
         self::$initiated = true;
 
-        add_action('admin_init', array('BocasBot_Admin', 'bocas_admin_init'));
-        add_action('admin_menu', array('BocasBot_Admin', 'bocas_menu') );
-        add_action('admin_enqueue_scripts', array('BocasBot_Admin', 'bocas_load_resources'));
-        add_action('admin_post_bocas_admin_add_comment', array('BocasBot_Admin', 'bocas_admin_add_comment'));
-        add_action('admin_post_bocas_admin_bulk_comments', array('BocasBot_Admin', 'bocas_admin_bulk_comments'));
+        add_action('admin_init', ['BocasBot_Admin', 'bocas_admin_init']);
+        add_action('admin_menu', ['BocasBot_Admin', 'bocas_menu']);
+        add_action('admin_enqueue_scripts', ['BocasBot_Admin', 'bocas_load_resources']);
+        add_action('admin_post_bocas_admin_add_comment', ['BocasBot_Admin', 'bocas_admin_add_comment']);
+        add_action('admin_post_bocas_admin_bulk_comments',['BocasBot_Admin', 'bocas_admin_bulk_comments']);
     }
 
     /**
@@ -62,7 +62,7 @@ class BocasBot_Admin
             'Bocas Bot',
             'manage_options',
             'bocas-bot',
-            array('BocasBot_Admin', 'bocas_admin_comments_view'),
+            ['BocasBot_Admin', 'bocas_admin_comments_view'],
             $icon,
             20
         );
@@ -73,7 +73,7 @@ class BocasBot_Admin
             'Add Comment',
             'manage_options',
             'add-bocas-comment',
-            array('BocasBot_Admin', 'bocas_admin_add_comment_view')
+            ['BocasBot_Admin', 'bocas_admin_add_comment_view']
         );
 
         add_submenu_page(
@@ -82,7 +82,7 @@ class BocasBot_Admin
             'Bulk Comments',
             'manage_options',
             'bulk-bocas-comments',
-            array('BocasBot_Admin', 'bocas_admin_bulk_comments_view')
+            ['BocasBot_Admin', 'bocas_admin_bulk_comments_view']
         );
     }
 
@@ -132,17 +132,17 @@ class BocasBot_Admin
 
         if('bocas_admin_bulk_comments' === sanitize_text_field($_POST['action']) ) {
             if(isset($_FILES['fileToUpload']) && $_FILES['fileToUpload']){
-                $overrides = array( 'test_form' => false, 'test_type' => false );
+                $overrides = ['test_form' => false, 'test_type' => false];
                 $movefile = wp_handle_upload( $_FILES['fileToUpload'], $overrides );
 
                 if ($movefile && ! isset( $movefile['error'])) {
-                    $comments = BocasBot::save_csv_comments_file($movefile['file']);
+                    BocasBot::save_csv_comments_file($movefile['file']);
                     unlink($movefile['file']);
                 }
             }
 
             if(isset($_POST['csv']) && $_POST['csv']){
-                $comments = BocasBot::save_csv_comments_string($_POST['csv']);
+                BocasBot::save_csv_comments_string($_POST['csv']);
             }
 
             wp_safe_redirect(admin_url('admin.php?page=bulk-bocas-comments'));

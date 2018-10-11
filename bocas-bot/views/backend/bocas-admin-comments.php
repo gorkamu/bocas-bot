@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <img src="<?php echo esc_url( plugins_url( '../assets/img/bocas_logo.png', __FILE__ ) ); ?>" alt="bocas wp bot" class="alignright bocas_logo" style="width:20%"/>
-                        <p>This plugin belongs to the <i>Indian Tools</i> and it allows you manage your own auto scheduled comments.</p>
+                        <p>This plugin allows you manage your own auto scheduled fake comments.</p>
                         <br>
                         <p>Exists two different ways to insert your own comments.</p>
                         <p>You can schedule one single comment going to the "Add comment" page. In that page you have to fill the form and submit the data.</p>
@@ -29,7 +29,7 @@
                         <p>This plugin is in the first Alpha version. All the feedback will be welcome.</p>
                         <br>
                         <p><a href="https://twitter.com/gorkakatua" target="_blank" rel="nofollow">@gorkakatua</a></p>
-                        <p><a href="http://gorkamu.com" target="_blank" rel="nofollow">http://gorkamu.com</a></p>
+                        <p><a href="http://gorkamu.com" target="_blank">http://gorkamu.com</a></p>
                         <br>
                         <p><h4 style="text-align: center;">New features are comming!</h4></p>
                     </div>
