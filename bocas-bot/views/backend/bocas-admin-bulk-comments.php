@@ -1,10 +1,5 @@
 <div class="wrap">
     <div class="container theme-showcase" role="main">
-        <div class="jumbotron">
-            <h1>Bulk Comments</h1>
-            <br>
-            <p>In this view you can schedule a huge of comments importing a single csv file.</p>
-        </div>
         <div class="panel panel-default bocas-background-color-panel">
             <div class="panel-body">
                 <div class="row">
@@ -59,7 +54,7 @@
                             <br><br>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success btn-block">Submit data</button>
+                                    <button type="submit" class="btn btn-success">Submit data</button>
                                 </div>
                             </div>
                         </form>
@@ -68,5 +63,34 @@
 
             </div>
         </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Url</th>
+                <th>Content</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if(isset($comments) && !is_null($comments)) {
+                foreach($comments as $key => $value) {
+                    ?>
+                    <tr>
+                        <td><?php echo esc_html($value->comment_author); ?></td>
+                        <td><?php echo esc_html($value->comment_author_email); ?></td>
+                        <td><?php echo esc_html($value->comment_author_url); ?></td>
+                        <td><?php echo esc_html($value->comment_content); ?></td>
+                        <td><?php echo esc_html($value->comment_approved); ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
+            </tbody>
+        </table>
     </div>
 </div>

@@ -34,6 +34,7 @@ class BocasBot_Admin
         add_action('admin_enqueue_scripts', ['BocasBot_Admin', 'bocas_load_resources']);
         add_action('admin_post_bocas_admin_add_comment', ['BocasBot_Admin', 'bocas_admin_add_comment']);
         add_action('admin_post_bocas_admin_bulk_comments',['BocasBot_Admin', 'bocas_admin_bulk_comments']);
+        add_action('admin_post_bocas_admin_add_user_agent', ['BocasBot_Admin', 'bocas_admin_add_user_agent']);
     }
 
     /**
@@ -100,9 +101,9 @@ class BocasBot_Admin
 
         global $wpdb;
 
-        $comments = $wpdb->get_results("SELECT comment_post_ID, comment_author, comment_author_email, comment_author_url, comment_author_IP, comment_date, comment_content, comment_approved FROM $wpdb->comments WHERE comment_bocas=1");
+        $userAgents = $wpdb->get_results("SELECT name, user_agent FROM wp_user_agents");
 
-        BocasBot::view('bocas-admin-comments', 'backend', [ 'comments' => $comments] );
+        BocasBot::view('bocas-admin-comments', 'backend', [ 'userAgents' => $userAgents] );
     }
 
     /**
@@ -116,7 +117,13 @@ class BocasBot_Admin
             wp_die( 'You are not allowed to be on this page.' );
         }
 
-        BocasBot::view('bocas-admin-bulk-comments', 'backend', [] );
+        global $wpdb;
+
+        $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_bocas = 1");
+
+        BocasBot::view('bocas-admin-bulk-comments', 'backend', [
+            'comments' => $comments
+        ] );
     }
 
     /**
@@ -164,8 +171,13 @@ class BocasBot_Admin
         global $wpdb;
 
         $posts = $wpdb->get_results("SELECT ID, post_title  FROM $wpdb->posts WHERE post_type='post' AND post_status = 'publish'");
+        $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_bocas = 1");
 
-        BocasBot::view('bocas-admin-add-comment', 'backend', [ 'posts' => $posts, 'userAgents' => BocasBot::getUserAgents() ]);
+        BocasBot::view('bocas-admin-add-comment', 'backend', [
+            'posts' => $posts,
+            'userAgents' => BocasBot::getUserAgents(),
+            'comments' => $comments
+        ]);
     }
 
     /**
@@ -219,6 +231,41 @@ class BocasBot_Admin
                 'comment_parent' => 0,
                 'user_id' => 0,
                 'comment_bocas' => true
+            ], '%s');
+
+            wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
+        }
+    }
+
+    /**
+     * bocas_admin_add_user_agent
+     * <br/>
+     */
+    public static function bocas_admin_add_user_agent()
+    {
+        if(!current_user_can('manage_options')){
+            wp_die( 'You are not allowed to be on this page.' );
+        }
+
+        if('bocas_admin_add_user_agent' === sanitize_text_field($_POST['action'])) {
+            global $wpdb;
+
+            $tableName = 'wp_user_agents';
+
+            if(
+                (!isset($_POST['name']) || is_null($_POST['name'])) &&
+                (!isset($_POST['user_agent']) || is_null($_POST['user_agent']))
+            ){
+                wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
+            }
+
+            // {Maria {de la O | Rodriguez | Antonieta} de todos los santos | Juan {el preparado | el constitucionalista} mola}
+            // {maria.{delao| rodriguez| antonieta89}@gmail.com| juan.{elpreparado | elconstitucionalista}@hotmail.com}
+            // {un {componente | componente | aspecto} importante de SEO | útil para {obtener | ganar} backlinks}.
+
+            $wpdb->insert($tableName, [
+                'name' => sanitize_text_field($_POST['name']),
+                'user_agent' => sanitize_text_field($_POST['user_agent']),
             ], '%s');
 
             wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
