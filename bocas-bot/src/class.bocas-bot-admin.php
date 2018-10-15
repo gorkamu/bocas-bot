@@ -199,11 +199,15 @@ class BocasBot_Admin
                 wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
             }
 
+            // {Maria {de la O | Rodriguez | Antonieta} de todos los santos | Juan {el preparado | el constitucionalista} mola}
+            // {maria.{delao| rodriguez| antonieta89}@gmail.com| juan.{elpreparado | elconstitucionalista}@hotmail.com}
+            // {un {componente | componente | aspecto} importante de SEO | útil para {obtener | ganar} backlinks}.
+
             $wpdb->insert($tableName, [
                 'comment_post_ID' => sanitize_text_field($_POST['post']),
-                'comment_author' => sanitize_text_field($_POST['name']),
-                'comment_author_email' => sanitize_text_field($_POST['email']),
-                'comment_author_url' => sanitize_text_field($_POST['web']),
+                'comment_author' => self::$spin->process(sanitize_text_field($_POST['name'])),
+                'comment_author_email' => self::$spin->process(sanitize_text_field($_POST['email'])),
+                'comment_author_url' => self::$spin->process(sanitize_text_field($_POST['web'])),
                 'comment_author_IP' => sanitize_text_field($_POST['ip']),
                 'comment_date' => date('Y-m-d G:i:s', strtotime(sanitize_text_field($_POST['date']))),
                 'comment_date_gmt' => date('Y-m-d G:i:s', strtotime(sanitize_text_field($_POST['date']))),

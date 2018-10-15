@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="jane.doe@example.com" required>
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="jane.doe@example.com" required>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="web">Web:</label>
@@ -94,7 +94,8 @@
                                         <textarea class="form-control" rows="3" cols="120" name="content" id="content" required></textarea>
                                     </div>
                                     <br><br>
-                                    <span>The name, email, web and content field could be used with spintax format.</span>
+                                    <span>The <i>name, email, web and content</i> field could be used with <a
+                                                href="http://gorkamu.com/2018/10/como-spinear-un-texto/#Spintax_anidado_o_en_3_dimensiones" target="_blank">spintax 3d format</a> too.</span>
                                 </div>
                             </div>
                             <br><br>
