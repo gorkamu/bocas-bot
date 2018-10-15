@@ -31,14 +31,14 @@
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label for="user-agent">User Agent:</label>
-                                        <select class="form-control" name="user-agent" id="user-agent" required>
+                                        <select class="form-control" name="user-agent" id="user-agent" required style="width: 79%;">
                                             <?php
                                             if(isset($userAgents) && !is_null($userAgents)) {
                                                 foreach($userAgents as $key => $value) {
                                                     ?>
-                                                    <option value="<?php echo esc_html($key); ?>"
-                                                            data-ua-id="<?php echo esc_html($key); ?>"
-                                                    ><?php echo esc_html($key); ?></option>
+                                                    <option value="<?php echo esc_html($value->name); ?>"
+                                                            data-ua-id="<?php echo esc_html($value->name); ?>"
+                                                    ><?php echo esc_html($value->user_agent); ?></option>
                                                     <?php
                                                 }
                                             }

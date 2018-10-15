@@ -55,6 +55,22 @@ class BocasBot
             $sql = "ALTER TABLE wp_comments ADD comment_bocas BOOLEAN";
             $wpdb->query($sql);
 
+            $charsetCollate = $wpdb->get_charset_collate();
+            $tableName = $wpdb->prefix . "user_agents";
+            $sql = "CREATE TABLE $tableName (
+              id mediumint(9) NOT NULL AUTO_INCREMENT,
+              name tinytext NOT NULL,
+              user_agent text NOT NULL,
+              PRIMARY KEY  (id)
+            ) $charsetCollate;";
+            $wpdb->query($sql);
+
+            $userAgents = self::loadUserAgents();
+            foreach ($userAgents as $name => $userAgent) {
+                $sql = "INSERT INTO $tableName (name, user_agent) VALUES('$name', '$userAgent')";
+                $wpdb->query($sql);
+            }
+
             $sql = sprintf("SET sql_mode = '%s'", $value);
             $wpdb->query($sql);
 
@@ -113,6 +129,10 @@ class BocasBot
             $wpdb->query($sql);
 
             $sql = 'ALTER TABLE wp_comments DROP COLUMN comment_bocas';
+            $wpdb->query($sql);
+
+            $tableName = $wpdb->prefix . "user_agents";
+            $sql = "DROP TABLE $tableName";
             $wpdb->query($sql);
 
             $sql = sprintf("SET sql_mode = '%s'", $value);
@@ -262,11 +282,24 @@ class BocasBot
     }
 
     /**
-     * Function getUserAgents()
-     *
-     * @return array
+     * @return array|null|object
      */
     public static function getUserAgents()
+    {
+        global $wpdb;
+
+        $tableName = $wpdb->prefix . "user_agents";
+        $sql = "SELECT name, user_agent from $tableName";
+        $results = $wpdb->get_results( $sql, OBJECT );
+
+        return $results;
+
+    }
+
+    /**
+     * @return array
+     */
+    public static function loadUserAgents()
     {
         return [
             'Windows 10 Chrome 42' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246',

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Bocas Bot - Auto WP Comments Scheduler
-Description: 🔥 Used by millions, Bocas Bot is quite possibly the <strong>best plugin to schedule your own and fake comments</strong> on your posts
+Description: 🔥 Used by millions, Bocas Bot is quite possibly the <strong>best plugin to schedule your own and fake comments</strong> on your posts.<br/> Boost your SEO with the unique plugin that has a fully format Spintax.
 Version:     0.0.1
 Author:      Gorkamu
 Author URI:  http://www.gorkamu.com
