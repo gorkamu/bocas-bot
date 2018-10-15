@@ -15,7 +15,7 @@
                         <br>
                         <p>Exists two different ways to insert your own comments.</p>
                         <p>You can schedule one single comment going to the "Add comment" page. In that page you have to fill the form and submit the data.</p>
-                        <p>The content field accepts text in spintax format. For more info visit <a href="http://umstrategies.com/what-is-spintax/" rel="nofollow" target="_blank">this link</a>.</p>
+                        <p>The content field accepts text in spintax format. For more info visit <a href="http://gorkamu.com/2018/10/como-spinear-un-texto/" target="_blank">this link</a>.</p>
                         <br>
                         <p>The other way to schedule the comments is making a massive load.</p>
                         <p>You are able to schedule a huge amount of comments going to the "Bulk comments" page.</p>
