@@ -33,6 +33,7 @@ class BocasBot_Admin
         add_action('admin_menu', ['BocasBot_Admin', 'bocas_menu']);
         add_action('admin_enqueue_scripts', ['BocasBot_Admin', 'bocas_load_resources']);
         add_action('admin_post_bocas_admin_add_comment', ['BocasBot_Admin', 'bocas_admin_add_comment']);
+        add_action('admin_post_bocas_admin_add_profile', ['BocasBot_Admin', 'bocas_admin_add_profile']);
         add_action('admin_post_bocas_admin_bulk_comments',['BocasBot_Admin', 'bocas_admin_bulk_comments']);
         add_action('admin_post_bocas_admin_add_user_agent', ['BocasBot_Admin', 'bocas_admin_add_user_agent']);
     }
@@ -85,6 +86,15 @@ class BocasBot_Admin
             'bulk-bocas-comments',
             ['BocasBot_Admin', 'bocas_admin_bulk_comments_view']
         );
+
+        add_submenu_page(
+            'bocas-bot',
+            'Settings',
+            'Settings',
+            'manage_options',
+            'settings',
+            ['BocasBot_Admin', 'bocas_admin_comments_view']
+        );
     }
 
     /**
@@ -102,8 +112,12 @@ class BocasBot_Admin
         global $wpdb;
 
         $userAgents = $wpdb->get_results("SELECT name, user_agent FROM wp_user_agents");
+        $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM wp_profiles");
 
-        BocasBot::view('bocas-admin-comments', 'backend', [ 'userAgents' => $userAgents] );
+        BocasBot::view('bocas-admin-comments', 'backend', [
+            'userAgents' => $userAgents,
+            'profiles' => $profiles
+        ] );
     }
 
     /**
@@ -125,6 +139,8 @@ class BocasBot_Admin
             'comments' => $comments
         ] );
     }
+
+    // http://www.wordreference.com/sinonimos/adulto
 
     /**
      * bocas_admin_bulk_comments()
@@ -172,13 +188,49 @@ class BocasBot_Admin
 
         $posts = $wpdb->get_results("SELECT ID, post_title  FROM $wpdb->posts WHERE post_type='post' AND post_status = 'publish'");
         $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_bocas = 1");
+        $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM wp_profiles");
 
         BocasBot::view('bocas-admin-add-comment', 'backend', [
             'posts' => $posts,
             'userAgents' => BocasBot::getUserAgents(),
-            'comments' => $comments
+            'comments' => $comments,
+            'profiles' => $profiles
         ]);
     }
+
+    public static function bocas_admin_add_profile()
+    {
+        if(!current_user_can('manage_options')){
+            wp_die( 'You are not allowed to be on this page.' );
+        }
+
+        if('bocas_admin_add_profile' === sanitize_text_field($_POST['action'])) {
+            global $wpdb;
+
+            $tableName = 'wp_profiles';
+
+            if(
+                (!isset($_POST['name']) || is_null($_POST['name'])) &&
+                (!isset($_POST['author']) || is_null($_POST['author'])) &&
+                (!isset($_POST['email']) || is_null($_POST['email'])) &&
+                (!isset($_POST['web']) || is_null($_POST['web'])) &&
+                (!isset($_POST['content']) || is_null($_POST['content']))
+            ){
+                wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
+            }
+
+            $wpdb->insert($tableName, [
+                'name' => sanitize_text_field($_POST['name']),
+                'author' => sanitize_text_field($_POST['author']),
+                'email' => sanitize_text_field($_POST['email']),
+                'web' => sanitize_text_field($_POST['web']),
+                'content' => sanitize_text_field($_POST['content'])
+            ], '%s');
+
+            wp_safe_redirect(admin_url('admin.php?page=settings'));
+        }
+    }
+
 
     /**
      * bocas_admin_add_comment()
@@ -212,7 +264,7 @@ class BocasBot_Admin
             }
 
             // {Maria {de la O | Rodriguez | Antonieta} de todos los santos | Juan {el preparado | el constitucionalista} mola}
-            // {maria.{delao| rodriguez| antonieta89}@gmail.com| juan.{elpreparado | elconstitucionalista}@hotmail.com}
+            // {maria.{delao| rodriguez| antonieta89}@gmail.com| juan.{elpreparado|elconstitucionalista}@hotmail.com}
             // {un {componente | componente | aspecto} importante de SEO | útil para {obtener | ganar} backlinks}.
 
             $wpdb->insert($tableName, [

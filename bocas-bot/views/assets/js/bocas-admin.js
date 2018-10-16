@@ -8,7 +8,36 @@ jQuery(function($) {
             let ip = (Math.floor(Math.random() * 255) + 1)+"."+(Math.floor(Math.random() * 255) + 0)+"."+(Math.floor(Math.random() * 255) + 0)+"."+(Math.floor(Math.random() * 255) + 0);
             $('#ip').val(ip);
         });
+
+        $('select[name="profile"]').on('change', () => {
+            let url = getUrlVars();
+            let el = $(this).find("option:selected");
+
+            if('add-bocas-comment' === url['page']) {
+                $('#name').val(el.data('profile-author'));
+            }else{
+                $('#name').val(el.data('profile-name'));
+            }
+
+            $('#author').val(el.data('profile-author'));
+            $('#email').val(el.data('profile-email'));
+            $('#web').val(el.data('profile-web'));
+            $('#content').val(el.data('profile-content'));
+        });
     });
+
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
 
 
     //$('.vye-bc-delete-service-btn').on('click', function() {

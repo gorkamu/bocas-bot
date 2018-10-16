@@ -9,6 +9,87 @@
         <div class="tab-content">
             <div id="profiles" class="tab-pane fade ">
                 <h3>Profiles</h3>
+                <br>
+
+                <div class="panel panel-default bocas-background-color-panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form method="post" action="admin-post.php" class="form-inline">
+                                    <input type="hidden" name="action" value="bocas_admin_add_profile" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-5">
+                                                <label for="name">Profile:</label>
+                                                <select class="form-control" name="profile" id="profile">
+                                                    <?php
+                                                    if(isset($profiles) && !is_null($profiles)) {
+                                                        foreach($profiles as $profile) {
+                                                            ?>
+                                                            <option value="<?php echo esc_html($profile->id); ?>"
+                                                                    data-profile-id="<?php echo esc_html($profile->id); ?>"
+                                                                    data-profile-name="<?php echo esc_html($profile->name); ?>"
+                                                                    data-profile-author="<?php echo esc_html($profile->author); ?>"
+                                                                    data-profile-email="<?php echo esc_html($profile->email); ?>"
+                                                                    data-profile-web="<?php echo esc_html($profile->web); ?>"
+                                                                    data-profile-content="<?php echo esc_html($profile->content); ?>"
+                                                            ><?php echo esc_html($profile->name); ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-6">
+                                                <label for="name">Profile name:</label>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="#1 Profile" style="width:80%" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="author">Author:</label>
+                                                <input type="text" class="form-control" id="author" name="author" placeholder="jane.doe@example.com" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="email">Email:</label>
+                                                <input type="text" class="form-control" id="email" name="email" placeholder="jane.doe@example.com" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-4">
+                                                <label for="web">Web:</label>
+                                                <input type="text" class="form-control" id="web" name="web" placeholder="http://gorkamu.com" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="date">Content:</label>
+                                                <textarea class="form-control" rows="3" cols="120" name="content" id="content" required></textarea>
+                                            </div>
+                                            <br><br>
+                                            <span>The <i>name, email, web and content</i> field could be used with <a
+                                                        href="http://gorkamu.com/2018/10/como-spinear-un-texto/#Spintax_anidado_o_en_3_dimensiones" target="_blank">spintax 3d format</a> too.</span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-success">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
             </div>
 
             <div id="user_agents" class="tab-pane fade in active">

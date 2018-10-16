@@ -71,6 +71,18 @@ class BocasBot
                 $wpdb->query($sql);
             }
 
+            $tableName = $wpdb->prefix . "profiles";
+            $sql = "CREATE TABLE $tableName (
+              id mediumint(9) NOT NULL AUTO_INCREMENT,
+              name tinytext NOT NULL,
+              author text NOT NULL,
+              email text NOT NULL,
+              web text NOT NULL,
+              content text NOT NULL,
+              PRIMARY KEY  (id)
+            ) $charsetCollate;";
+            $wpdb->query($sql);
+
             $sql = sprintf("SET sql_mode = '%s'", $value);
             $wpdb->query($sql);
 
@@ -132,6 +144,10 @@ class BocasBot
             $wpdb->query($sql);
 
             $tableName = $wpdb->prefix . "user_agents";
+            $sql = "DROP TABLE $tableName";
+            $wpdb->query($sql);
+
+            $tableName = $wpdb->prefix . "profiles";
             $sql = "DROP TABLE $tableName";
             $wpdb->query($sql);
 

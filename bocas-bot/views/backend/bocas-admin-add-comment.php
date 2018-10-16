@@ -10,6 +10,32 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group col-md-5">
+                                        <label for="name">Profile:</label>
+                                        <select class="form-control" name="profile" id="profile">
+                                            <?php
+                                            if(isset($profiles) && !is_null($profiles)) {
+                                                foreach($profiles as $profile) {
+                                                    ?>
+                                                    <option value="<?php echo esc_html($profile->id); ?>"
+                                                            data-profile-id="<?php echo esc_html($profile->id); ?>"
+                                                            data-profile-name="<?php echo esc_html($profile->name); ?>"
+                                                            data-profile-author="<?php echo esc_html($profile->author); ?>"
+                                                            data-profile-email="<?php echo esc_html($profile->email); ?>"
+                                                            data-profile-web="<?php echo esc_html($profile->web); ?>"
+                                                            data-profile-content="<?php echo esc_html($profile->content); ?>"
+                                                    ><?php echo esc_html($profile->name); ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-5">
                                         <label for="name">Post:</label>
                                         <select class="form-control" name="post" id="post" required>
                                             <?php
