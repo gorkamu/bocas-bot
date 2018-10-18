@@ -139,33 +139,59 @@
             </div>
         </div>
 
-        <table class="table table-striped">
+        <table class="wp-list-table widefat fixed striped comments">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>Url</th>
-                <th>Content</th>
-                <th>Status</th>
+                <th scope="col" id="author" class="manage-column column-author" style="width: 18%"><span>Author</span></th>
+                <th scope="col" id="comment" class="manage-column column-comment">Comment</th>
+                <th scope="col" id="response" class="manage-column column-response"><span>In reply to</span></th>
+                <th scope="col" id="date" class="manage-column column-date"><span>Submitted on</span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="the-comment-list" data-wp-lists="list:comment">
             <?php
-            if(isset($comments) && !is_null($comments)) {
-                foreach($comments as $key => $value) {
-                    ?>
-                    <tr>
-                        <td><?php echo esc_html($value->comment_author); ?></td>
-                        <td><?php echo esc_html($value->comment_author_email); ?></td>
-                        <td><?php echo explode(" ", esc_html($value->comment_date))[0]; ?></td>
-                        <td><?php echo esc_html($value->comment_author_url); ?></td>
-                        <td><?php echo esc_html($value->comment_content); ?></td>
-                        <td><?php echo esc_html($value->comment_approved); ?></td>
-                    </tr>
-                    <?php
+                if(isset($comments) && !is_null($comments)) {
+                    foreach($comments as $key => $value) {
+
+            ?>
+                <tr id="comment-<?php echo esc_html($value->comment_ID); ?>" class="comment even thread-even depth-1 approved">
+                    <td class="author column-author" data-colname="Autor">
+                        <strong>
+                            <img alt=""
+                                 src="http://0.gravatar.com/avatar/36599ddecac54011bd670626bacf745a?s=32&amp;d=mm&amp;r=g"
+                                 srcset="http://0.gravatar.com/avatar/36599ddecac54011bd670626bacf745a?s=64&amp;d=mm&amp;r=g 2x"
+                                 class="avatar avatar-32 photo" height="32" width="32"/>
+                            <?php echo esc_html($value->comment_author); ?>
+                        </strong>
+                        <br>
+                        <a target="_blank" href="<?php echo esc_html($value->comment_author_url); ?>"><?php echo esc_html($value->comment_author_url); ?></a>
+                        <br>
+                        <a><?php echo esc_html($value->comment_author_email); ?></a>
+                        <br>
+                        <a><?php echo esc_html($value->comment_author_IP); ?></a>
+                    </td>
+
+                    <td class="comment column-comment has-row-actions column-primary" data-colname="Comment">
+                        <p><?php echo esc_html($value->comment_content); ?></p>
+                        <div class="row-actions"><span class="approve"><a href="comment.php?c=21&amp;action=approvecomment&amp;_wpnonce=5ca5537d6a" data-wp-lists="dim:the-comment-list:comment-21:unapproved:e7e7d3:e7e7d3:new=approved" class="vim-a" aria-label="Aprobar este comentario">Aprobar</a></span><span class="unapprove"><a href="comment.php?c=21&amp;action=unapprovecomment&amp;_wpnonce=5ca5537d6a" data-wp-lists="dim:the-comment-list:comment-21:unapproved:e7e7d3:e7e7d3:new=unapproved" class="vim-u" aria-label="Rechazar este comentario">Rechazar</a></span><span class="reply hide-if-no-js"> | <a data-comment-id="21" data-post-id="1" data-action="replyto" class="vim-r comment-inline" aria-label="Responder a este comentario" href="#">Responder</a></span><span class="quickedit hide-if-no-js"> | <a data-comment-id="21" data-post-id="1" data-action="edit" class="vim-q comment-inline" aria-label="Edición rápida integrada de este comentario" href="#">Edición rápida</a></span><span class="edit"> | <a href="comment.php?action=editcomment&amp;c=21" aria-label="Editar este comentario">Editar</a></span><span class="spam"> | <a href="comment.php?c=21&amp;action=spamcomment&amp;_wpnonce=5ff8071bf6" data-wp-lists="delete:the-comment-list:comment-21::spam=1" class="vim-s vim-destructive" aria-label="Marcar este comentario como spam">Spam</a></span><span class="trash"> | <a href="comment.php?c=<?php echo esc_html($value->comment_ID); ?>&action=trashcomment&_wpnonce=5ff8071bf6" data-wp-lists="delete:the-comment-list:comment-<?php echo esc_html($value->comment_ID); ?>::trash=1" class="delete vim-d vim-destructive" aria-label="Mover este comentario a la papelera">Papelera</a></span></div>
+                    </td>
+
+                    <td class="response column-response" data-colname="En respuesta a">
+                        <div class="response-links">
+                            <a href="/wp-admin/post.php?post=<?php echo esc_html($value->ID); ?>&action=edit" class="comments-edit-item-link"><?php echo esc_html($value->post_title); ?></a>
+                            <a href="<?php echo esc_html($value->guid); ?>" class="comments-view-item-link">Ver entrada</a>
+                        </div>
+                    </td>
+
+                    <td class="date column-date" data-colname="Submitted on">
+                        <div class="submitted-on">
+                            <a href="<?php echo esc_html($value->guid); ?>#comment-<?php echo esc_html($value->comment_ID); ?>" target="_blank"><?php echo explode(" ", esc_html($value->comment_date))[0]; ?></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php
+                    }
                 }
-            }
             ?>
             </tbody>
         </table>

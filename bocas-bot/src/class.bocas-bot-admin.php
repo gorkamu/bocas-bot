@@ -135,7 +135,8 @@ class BocasBot_Admin
 
         global $wpdb;
 
-        $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_bocas = 1");
+        $query = "SELECT wc.*, wp.ID, wp.post_title, wp.guid FROM $wpdb->comments AS wc INNER JOIN $wpdb->posts AS wp ON wp.ID = wc.comment_post_ID WHERE wc.comment_bocas = 1;";
+        $comments = $wpdb->get_results($query);
 
         BocasBot::view('bocas-admin-bulk-comments', 'backend', [
             'comments' => $comments
@@ -189,7 +190,9 @@ class BocasBot_Admin
         global $wpdb;
 
         $posts = $wpdb->get_results("SELECT ID, post_title  FROM $wpdb->posts WHERE post_type='post' AND post_status = 'publish'");
-        $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_bocas = 1");
+
+        $query = "SELECT wc.*, wp.ID, wp.post_title, wp.guid FROM $wpdb->comments AS wc INNER JOIN $wpdb->posts AS wp ON wp.ID = wc.comment_post_ID WHERE wc.comment_bocas = 1;";
+        $comments = $wpdb->get_results($query);
         $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM wp_profiles");
 
         BocasBot::view('bocas-admin-add-comment', 'backend', [
