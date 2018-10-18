@@ -69,6 +69,7 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Date</th>
                 <th>Url</th>
                 <th>Content</th>
                 <th>Status</th>
@@ -82,6 +83,7 @@
                     <tr>
                         <td><?php echo esc_html($value->comment_author); ?></td>
                         <td><?php echo esc_html($value->comment_author_email); ?></td>
+                        <td><?php echo explode(" ", esc_html($value->comment_date))[0]; ?></td>
                         <td><?php echo esc_html($value->comment_author_url); ?></td>
                         <td><?php echo esc_html($value->comment_content); ?></td>
                         <td><?php echo esc_html($value->comment_approved); ?></td>

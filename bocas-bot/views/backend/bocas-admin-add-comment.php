@@ -12,6 +12,13 @@
                                     <div class="form-group col-md-5">
                                         <label for="name">Profile:</label>
                                         <select class="form-control" name="profile" id="profile">
+                                            <option value=""
+                                                    data-profile-id=""
+                                                    data-profile-name=""
+                                                    data-profile-author=""
+                                                    data-profile-email=""
+                                                    data-profile-web=""
+                                                    data-profile-content=""> -- </option>
                                             <?php
                                             if(isset($profiles) && !is_null($profiles)) {
                                                 foreach($profiles as $profile) {
@@ -137,6 +144,7 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Date</th>
                 <th>Url</th>
                 <th>Content</th>
                 <th>Status</th>
@@ -150,6 +158,7 @@
                     <tr>
                         <td><?php echo esc_html($value->comment_author); ?></td>
                         <td><?php echo esc_html($value->comment_author_email); ?></td>
+                        <td><?php echo explode(" ", esc_html($value->comment_date))[0]; ?></td>
                         <td><?php echo esc_html($value->comment_author_url); ?></td>
                         <td><?php echo esc_html($value->comment_content); ?></td>
                         <td><?php echo esc_html($value->comment_approved); ?></td>

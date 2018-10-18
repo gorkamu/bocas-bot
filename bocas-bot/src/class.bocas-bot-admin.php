@@ -95,6 +95,8 @@ class BocasBot_Admin
             'settings',
             ['BocasBot_Admin', 'bocas_admin_comments_view']
         );
+
+        remove_submenu_page('bocas-bot', 'bocas-bot');
     }
 
     /**
@@ -219,15 +221,25 @@ class BocasBot_Admin
                 wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
             }
 
-            $wpdb->insert($tableName, [
-                'name' => sanitize_text_field($_POST['name']),
-                'author' => sanitize_text_field($_POST['author']),
-                'email' => sanitize_text_field($_POST['email']),
-                'web' => sanitize_text_field($_POST['web']),
-                'content' => sanitize_text_field($_POST['content'])
-            ], '%s');
+            if(isset($_POST['profile']) && "" !== $_POST['profile']){
+                $wpdb->update($tableName, [
+                    'name' => sanitize_text_field($_POST['name']),
+                    'author' => sanitize_text_field($_POST['author']),
+                    'email' => sanitize_text_field($_POST['email']),
+                    'web' => sanitize_text_field($_POST['web']),
+                    'content' => sanitize_text_field($_POST['content'])
+                ], ['id' => $_POST['profile']]);
+            }else{
+                $wpdb->insert($tableName, [
+                    'name' => sanitize_text_field($_POST['name']),
+                    'author' => sanitize_text_field($_POST['author']),
+                    'email' => sanitize_text_field($_POST['email']),
+                    'web' => sanitize_text_field($_POST['web']),
+                    'content' => sanitize_text_field($_POST['content'])
+                ], '%s');
+            }
 
-            wp_safe_redirect(admin_url('admin.php?page=settings'));
+            wp_safe_redirect(admin_url('admin.php?page=bocas-bot'));
         }
     }
 
@@ -320,7 +332,7 @@ class BocasBot_Admin
                 'user_agent' => sanitize_text_field($_POST['user_agent']),
             ], '%s');
 
-            wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
+            wp_safe_redirect(admin_url('admin.php?page=bocas-bot'));
         }
     }
 

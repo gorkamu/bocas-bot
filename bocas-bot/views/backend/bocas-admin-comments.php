@@ -22,6 +22,13 @@
                                             <div class="form-group col-md-5">
                                                 <label for="name">Profile:</label>
                                                 <select class="form-control" name="profile" id="profile">
+                                                    <option value=""
+                                                            data-profile-id=""
+                                                            data-profile-name=""
+                                                            data-profile-author=""
+                                                            data-profile-email=""
+                                                            data-profile-web=""
+                                                            data-profile-content=""> -- </option>
                                                     <?php
                                                     if(isset($profiles) && !is_null($profiles)) {
                                                         foreach($profiles as $profile) {
@@ -43,15 +50,15 @@
                                         </div>
                                         <br><br>
                                         <div class="col-md-12">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="name">Profile name:</label>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="#1 Profile" style="width:80%" required>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="#1 Profile" required>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-4">
                                                 <label for="author">Author:</label>
                                                 <input type="text" class="form-control" id="author" name="author" placeholder="jane.doe@example.com" required>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-4">
                                                 <label for="email">Email:</label>
                                                 <input type="text" class="form-control" id="email" name="email" placeholder="jane.doe@example.com" required>
                                             </div>
