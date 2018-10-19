@@ -119,7 +119,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="date">Content:</label>
+                                        <label for="date">Comment:</label>
                                         <textarea class="form-control" rows="3" cols="120" name="content" id="content" required></textarea>
                                     </div>
                                     <br><br>

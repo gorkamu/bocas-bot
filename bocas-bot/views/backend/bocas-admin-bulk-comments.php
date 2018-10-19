@@ -5,18 +5,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span>
-                            <strong>Header & Format:</strong>
-                            postId,name,email,web,ip,date,content,status,user-agent
+                            <strong>Format:</strong>
+                            postId,name,email,web,ip,date,comment,status,user-agent
                         </span>
                         <br>
                         <span>
                             <strong>Example:</strong>
                             <i>28,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0</i>
-                        </span>
-                        <br>
-                        <span>
-                            <strong>Escape character:</strong>
-                            <i>\r</i>
                         </span>
                         <br>
                         <span>
@@ -42,7 +37,7 @@
                                     <div class="form-group">
                                         <label for="csv">CSV:</label>
                                         <textarea class="form-control" rows="10" cols="133" name="csv" id="csv"
-                                            placeholder="postId,name,email,web,ip,date,content,status,user-agent&#x0a;28,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0&#x0a;29,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0&#x0a;30,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0&#x0a;31,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0"
+                                            placeholder="postId,name,email,web,ip,date,comment,status,user-agent&#x0a;28,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0&#x0a;29,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0&#x0a;30,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0&#x0a;31,{Jacinto|Maria|Ainhoa},jacinto@gmail.com,http://google.com,192.168.1.100,18-09-1989,{texto|contenido|parrafo} spineado,0,Mozilla/5.0"
                                         ></textarea>
                                     </div>
                                 </div>

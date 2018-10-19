@@ -14,7 +14,7 @@ if ( !function_exists( 'add_action' ) ) {
     exit;
 }
 
-define( 'BOCAS_BOT__VERSION', '0.0.1' );
+define( 'BOCAS_BOT__VERSION', '1.0.0' );
 define( 'BOCAS_BOT__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BOCAS_BOT__SRC_DIR', BOCAS_BOT__PLUGIN_DIR . 'src/' );
 define( 'BOCAS_BOT__VIEWS_DIR', BOCAS_BOT__PLUGIN_DIR . 'views/' );

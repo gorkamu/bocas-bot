@@ -93,11 +93,19 @@ class BocasBot
         }
     }
 
+    /**
+     * setup()
+     * <br/>
+     */
     public static function setup()
     {
         add_action('bocas_publish_cron', ['BocasBot', 'bocas_publish']);
     }
 
+    /**
+     * bocas_publish()
+     * <br/>
+     */
     public static function bocas_publish()
     {
         global $wpdb;
@@ -110,7 +118,6 @@ class BocasBot
             $wpdb->query($sql);
         }
     }
-
 
     /**
      * Removes all connection options
