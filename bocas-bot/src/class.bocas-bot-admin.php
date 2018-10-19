@@ -36,6 +36,9 @@ class BocasBot_Admin
         add_action('admin_post_bocas_admin_add_profile', ['BocasBot_Admin', 'bocas_admin_add_profile']);
         add_action('admin_post_bocas_admin_bulk_comments',['BocasBot_Admin', 'bocas_admin_bulk_comments']);
         add_action('admin_post_bocas_admin_add_user_agent', ['BocasBot_Admin', 'bocas_admin_add_user_agent']);
+        add_action('wp_ajax_bocas_admin_remove_profile', ['BocasBot_Admin', 'bocas_admin_remove_profile']);
+        add_action('wp_ajax_bocas_admin_remove_user_agent', ['BocasBot_Admin', 'bocas_admin_remove_user_agent']);
+
     }
 
     /**
@@ -113,7 +116,7 @@ class BocasBot_Admin
 
         global $wpdb;
 
-        $userAgents = $wpdb->get_results("SELECT name, user_agent FROM wp_user_agents");
+        $userAgents = $wpdb->get_results("SELECT id, name, user_agent FROM wp_user_agents");
         $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM wp_profiles");
 
         BocasBot::view('bocas-admin-comments', 'backend', [
@@ -242,10 +245,95 @@ class BocasBot_Admin
                 ], '%s');
             }
 
-            wp_safe_redirect(admin_url('admin.php?page=bocas-bot'));
+            wp_safe_redirect(admin_url('admin.php?page=settings'));
         }
     }
 
+    /**
+     * bocas_admin_remove_profile()
+     * <br/>
+     *
+     * Function to remove the selected profile
+     *
+     * @throws Exception
+     */
+    public static function bocas_admin_remove_profile()
+    {
+        if(!current_user_can('manage_options')){
+            wp_die( 'You are not allowed to be on this page.' );
+        }
+
+        if(!isset($_POST['profile'])) {
+            throw new Exception('Missing parameter', 500);
+        }
+
+        $profile = sanitize_text_field($_POST['profile']);
+
+        global $wpdb;
+
+        try {
+            $tableName = 'wp_profiles';
+            $wpdb->delete($tableName, ['id' => $profile]);
+            $result = [
+                'action' => 'bocas_admin_remove_profile',
+                'profile' => $profile,
+                'success' => true,
+                'code' => 200
+            ];
+        } catch (Exception $e) {
+            $result = [
+                'action' => 'bocas_admin_remove_profile',
+                'succes' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+
+        wp_send_json($result);
+    }
+
+    /**
+     * bocas_admin_remove_user_agent()
+     * <br/>
+     *
+     * Function to remove the selected profile
+     *
+     * @throws Exception
+     */
+    public static function bocas_admin_remove_user_agent()
+    {
+        if(!current_user_can('manage_options')){
+            wp_die( 'You are not allowed to be on this page.' );
+        }
+
+        if(!isset($_POST['user_agent'])) {
+            throw new Exception('Missing parameter', 500);
+        }
+
+        $userAgent = sanitize_text_field($_POST['user_agent']);
+
+        global $wpdb;
+
+        try {
+            $tableName = 'wp_user_agents';
+            $wpdb->delete($tableName, ['id' => $userAgent]);
+            $result = [
+                'action' => 'bocas_admin_remove_user_agent',
+                'userAgent' => $userAgent,
+                'success' => true,
+                'code' => 200
+            ];
+        } catch (Exception $e) {
+            $result = [
+                'action' => 'bocas_admin_remove_user_agent',
+                'succes' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+
+        wp_send_json($result);
+    }
 
     /**
      * bocas_admin_add_comment()
@@ -325,10 +413,6 @@ class BocasBot_Admin
             ){
                 wp_safe_redirect(admin_url('admin.php?page=add-bocas-comment'));
             }
-
-            // {Maria {de la O | Rodriguez | Antonieta} de todos los santos | Juan {el preparado | el constitucionalista} mola}
-            // {maria.{delao| rodriguez| antonieta89}@gmail.com| juan.{elpreparado | elconstitucionalista}@hotmail.com}
-            // {un {componente | componente | aspecto} importante de SEO | útil para {obtener | ganar} backlinks}.
 
             $wpdb->insert($tableName, [
                 'name' => sanitize_text_field($_POST['name']),

@@ -23,49 +23,66 @@ jQuery(function($) {
             $('#email').val(el.data('profile-email'));
             $('#web').val(el.data('profile-web'));
             $('#content').val(el.data('profile-content'));
+
+            if('?page=settings' === window.location.search){
+                $('.bocas-delete-profile').show()
+            }
         });
-    });
 
-    function getUrlVars()
-    {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
+        $('.bocas-trash').on('click', removeUserAgent);
+
+        $('.bocas-delete-profile').on('click', (e) => {
+            e.preventDefault();
+            let profile = $('select[name="profile"] option:selected').data('profile-id');
+            $.ajax({
+                url:"/wp-admin/admin-ajax.php",
+                type: 'POST',
+                data: {
+                    action: 'bocas_admin_remove_profile',
+                    profile: profile
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data.code === 200 && data.success) {
+                        location.reload();
+                    }else{
+
+                    }
+
+                }
+            });
+        });
+
+        function removeUserAgent() {
+            let userAgentId = $(this).data('id');
+            $.ajax({
+                url:"/wp-admin/admin-ajax.php",
+                type: 'POST',
+                data: {
+                    action: 'bocas_admin_remove_user_agent',
+                    user_agent: userAgentId
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data.code === 200 && data.success) {
+                        location.reload();
+                    }else{
+
+                    }
+                }
+            });
         }
-        return vars;
-    }
 
+        function getUrlVars() {
+            let vars = [], hash;
+            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(let i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
 
-    //$('.vye-bc-delete-service-btn').on('click', function() {
-    //    var keyName = $(this).parent().parent().parent().data('key');
-    //    var id = $(this).parent().parent().parent().data('id');
-    //    var keyPart = keyName.split("_");
-    //
-    //    $.ajax({
-    //        url:"/wp-admin/admin-ajax.php",
-    //        type: 'POST',
-    //        data: {
-    //            action: 'delete_service',
-    //            hash_token: $(this).data('token'),
-    //            key: keyPart[1],
-    //            id: id
-    //        },
-    //        success: function(data){
-    //            console.log(data);
-    //            if(data.code === 200) {
-    //                $('.alert').removeClass('alert-danger').addClass('alert-success');
-    //                $('tr[data-id="'+data.id+'"]').remove();
-    //            }else{
-    //                $('.alert').removeClass('alert-success').addClass('alert-danger');
-    //            }
-    //            $('.alert-msg').html(data.msg);
-    //            $('.alert').show();
-    //        }
-    //    });
-    //});
-
+            return vars;
+        }
+    });
 });

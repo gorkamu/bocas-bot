@@ -89,6 +89,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <button type="submit" class="btn btn-success">Save</button>
+                                            <button class="btn btn-danger bocas-delete-profile" style="display:none">Delete profile</button>
                                         </div>
                                     </div>
                                 </form>
@@ -119,6 +120,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th>User Agents</th>
                         </tr>
@@ -129,6 +131,7 @@
                         foreach($userAgents as $key => $value) {
                             ?>
                                 <tr>
+                                    <td><span class="dashicons dashicons-trash bocas-trash" data-id="<?php echo esc_html($value->id); ?>"></span</td>
                                     <td><?php echo esc_html($value->name); ?></td>
                                     <td><?php echo esc_html($value->user_agent); ?></td>
                                 </tr>
