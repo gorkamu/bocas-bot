@@ -2,7 +2,11 @@
 
 ![Bocas Bot - Auto WP Comments Scheduler](https://i.imgur.com/wr8XZ0I.png)
 
-A wordpress plugin to auto schedule your own fake comments and improve your post's engagement and SEO on page
+A wordpress plugin to auto schedule your own fake comments and improve your post's engagement and SEO on page.
+
+You can schedule comments to the current date or to a future date.
+
+The Wordpress CRON system will be responsible for publishing it.
 
 ## How to install it
 
@@ -41,5 +45,20 @@ If you click on the *Add Comment* menu option you will be able to auto schedule 
 
 With this mode you can auto schedule multiple comments.
 It has two different modes.
-First of all you can put you comments in CSV format and paste it on the text area field.
-Or otherwise you can upload a CSV file and the plugin will be able to process it and delete it after that.
+First of all you can put you comments in CSV format and paste it on the text area field or otherwise you can upload a CSV file and the plugin will be able to process it and delete it after that.
+
+This CSV mode has a specific format and it is the following:
+
+``` bash
+post-id,author-name,author-email,author-web,ip-address,date,comment,comment-status,user-agent
+```
+
+Each field should be splitted by a single comma and each comment have to be in a different line.
+
+Whether you paste the csv text in the field or upload the file, always it has to be with the specified format.
+
+### Add new User Agents
+
+![Bocas Bot - User Agents](https://i.imgur.com/JpMv2gq.png)
+
+This plugin come with ten different user agents to use them but if you want to add a new one you can do it through *Settings* panel.  
