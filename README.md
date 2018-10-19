@@ -62,3 +62,33 @@ Whether you paste the csv text in the field or upload the file, always it has to
 ![Bocas Bot - User Agents](https://i.imgur.com/JpMv2gq.png)
 
 This plugin come with ten different user agents to use them but if you want to add a new one you can do it through *Settings* panel.  
+
+### Add new comment profiles
+
+![Bocas Bot - User Agents](https://i.imgur.com/TPlPK2k.png)
+
+If you want to save time and define the same author name, author email, author web (backlink) and comment to use them multiple times on your own auto scheduled comments you can do it through the *Profiles* tab in *Settings* panel.
+
+As in the other plugin's options you can add the spintax format in these fields. 
+
+## How to develop and contrib
+
+If you want to develop new features or if you want to contribute fixing bugs you don't need install nothing except docker compose.
+
+This plugin comes with a docker-compose file with all the needed configuration to download a copy of Wordpress and be used it as black-boxed.
+
+The docker-compose file will download an image from PHP (where wordpress and the plugin will be) and another image for the database with MySQL installed.
+
+To use it just launch the following command on the root folder.
+
+``` bash
+$ docker-compose up -d --build
+```
+
+That command will download the images, the Wordpress CMS and it will lift the containers.
+
+Then you just go to *http://localhost:8080* and *voilá*
+
+To add a new feature or a fixed bug you should use git and generate a branch from master branch.
+
+When the code is done send me a +Pull Request+ so i can review it and merge your branch.
