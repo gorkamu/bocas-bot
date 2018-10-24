@@ -1,6 +1,6 @@
 # 💋 💋 Bocas Bot - Auto WP Comments Scheduler
 
-![Bocas Bot - Auto WP Comments Scheduler](https://i.imgur.com/wr8XZ0I.png)
+![Bocas Bot - Auto WP Comments Scheduler](https://i.imgur.com/r4pZ8D0.png)
 
 A wordpress plugin to auto schedule your own fake comments and improve your post's engagement and SEO on page.
 
