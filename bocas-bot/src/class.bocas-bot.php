@@ -31,7 +31,11 @@ class BocasBot
     public static function plugin_activation()
     {
         self::bocas_update_db();
-        wp_schedule_event( time(), 'hourly', 'bocas_publish_cron');
+        if (!wp_next_scheduled( 'bocas_publish_cron' )) {
+            wp_schedule_event( time(), 'hourly', 'bocas_publish_cron');
+        }
+
+        add_action('bocas_publish_cron', ['BocasBot', 'bocas_publish']);
     }
 
     /**
@@ -99,6 +103,10 @@ class BocasBot
      */
     public static function setup()
     {
+        if (!wp_next_scheduled( 'bocas_publish_cron' )) {
+            wp_schedule_event( time(), 'hourly', 'bocas_publish_cron');
+        }
+
         add_action('bocas_publish_cron', ['BocasBot', 'bocas_publish']);
     }
 
