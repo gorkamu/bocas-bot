@@ -126,8 +126,8 @@ class BocasBot_Admin
 
         global $wpdb;
 
-        $userAgents = $wpdb->get_results("SELECT id, name, user_agent FROM wp_user_agents");
-        $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM wp_profiles");
+        $userAgents = $wpdb->get_results("SELECT id, name, user_agent FROM {$wpdb->base_prefix}user_agents");
+        $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM {$wpdb->base_prefix}profiles");
 
         BocasBot::view('bocas-admin-settings', 'backend', [
             'userAgents' => $userAgents,
@@ -202,7 +202,7 @@ class BocasBot_Admin
 
         $posts = $wpdb->get_results("SELECT ID, post_title  FROM $wpdb->posts WHERE post_type='post' AND post_status = 'publish'");
         $comments = $wpdb->get_results("SELECT wc.*, wp.ID, wp.post_title, wp.guid FROM $wpdb->comments AS wc INNER JOIN $wpdb->posts AS wp ON wp.ID = wc.comment_post_ID WHERE wc.comment_bocas = 1 AND wc.comment_approved NOT IN ('trash');");
-        $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM wp_profiles");
+        $profiles = $wpdb->get_results("SELECT id, name, author, email, web, content FROM {$wpdb->base_prefix}profiles");
 
         BocasBot::view('bocas-admin-add-comment', 'backend', [
             'posts' => $posts,
@@ -221,7 +221,7 @@ class BocasBot_Admin
         if('bocas_admin_add_profile' === sanitize_text_field($_POST['action'])) {
             global $wpdb;
 
-            $tableName = 'wp_profiles';
+            $tableName = $wpdb->base_prefix.'profiles';
 
             if(
                 (!isset($_POST['name']) || is_null($_POST['name'])) &&
@@ -278,7 +278,7 @@ class BocasBot_Admin
         global $wpdb;
 
         try {
-            $tableName = 'wp_profiles';
+            $tableName = $wpdb->base_prefix.'profiles';
             $wpdb->delete($tableName, ['id' => $profile]);
             $result = [
                 'action' => 'bocas_admin_remove_profile',
@@ -321,7 +321,7 @@ class BocasBot_Admin
         global $wpdb;
 
         try {
-            $tableName = 'wp_user_agents';
+            $tableName = $wpdb->base_prefix.'user_agents';
             $wpdb->delete($tableName, ['id' => $userAgent]);
             $result = [
                 'action' => 'bocas_admin_remove_user_agent',
@@ -356,7 +356,7 @@ class BocasBot_Admin
         if('bocas_admin_add_comment' === sanitize_text_field($_POST['action'])) {
             global $wpdb;
 
-            $tableName = 'wp_comments';
+            $tableName = sprintf("%scomments",$wpdb->base_prefix);
 
             if(
                 (!isset($_POST['post']) || is_null($_POST['post'])) &&
@@ -407,7 +407,7 @@ class BocasBot_Admin
         if('bocas_admin_add_user_agent' === sanitize_text_field($_POST['action'])) {
             global $wpdb;
 
-            $tableName = 'wp_user_agents';
+            $tableName = $wpdb->base_prefix.'user_agents';
 
             if(
                 (!isset($_POST['name']) || is_null($_POST['name'])) &&

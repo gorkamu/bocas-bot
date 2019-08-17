@@ -56,11 +56,11 @@ class BocasBot
             $sql = "SET sql_mode = ''";
             $wpdb->query($sql);
 
-            $sql = "ALTER TABLE wp_comments ADD comment_bocas BOOLEAN";
+            $sql = "ALTER TABLE {$wpdb->base_prefix}comments ADD comment_bocas BOOLEAN";
             $wpdb->query($sql);
 
             $charsetCollate = $wpdb->get_charset_collate();
-            $tableName = $wpdb->prefix . "user_agents";
+            $tableName = $wpdb->base_prefix . "user_agents";
             $sql = "CREATE TABLE $tableName (
               id mediumint(9) NOT NULL AUTO_INCREMENT,
               name tinytext NOT NULL,
@@ -75,7 +75,7 @@ class BocasBot
                 $wpdb->query($sql);
             }
 
-            $tableName = $wpdb->prefix . "profiles";
+            $tableName = $wpdb->base_prefix . "profiles";
             $sql = "CREATE TABLE $tableName (
               id mediumint(9) NOT NULL AUTO_INCREMENT,
               name tinytext NOT NULL,
@@ -155,14 +155,14 @@ class BocasBot
             $sql = "SET sql_mode = ''";
             $wpdb->query($sql);
 
-            $sql = 'ALTER TABLE wp_comments DROP COLUMN comment_bocas';
+            $sql = "ALTER TABLE {$wpdb->base_prefix}comments DROP COLUMN comment_bocas";
             $wpdb->query($sql);
 
-            $tableName = $wpdb->prefix . "user_agents";
+            $tableName = $wpdb->base_prefix . "user_agents";
             $sql = "DROP TABLE $tableName";
             $wpdb->query($sql);
 
-            $tableName = $wpdb->prefix . "profiles";
+            $tableName = $wpdb->base_prefix . "profiles";
             $sql = "DROP TABLE $tableName";
             $wpdb->query($sql);
 
